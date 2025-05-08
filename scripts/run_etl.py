@@ -2,6 +2,7 @@ import os
 import sys
 from config.env_config import setup_env
 from etl.extract.extract import extract_and_load_data
+from etl.transform.transform import clean_and_transform_data
 
 
 def main():
@@ -13,6 +14,7 @@ def main():
     )
 
     df = extract_and_load_data("./data/raw/ActivitiesGarmin.csv")
+    df = clean_and_transform_data(df)
 
     return df
 
