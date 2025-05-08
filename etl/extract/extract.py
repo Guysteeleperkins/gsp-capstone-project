@@ -1,22 +1,6 @@
-import os
-import sys
-from config.env_config import setup_env
+import pandas as pd
 
 
-def main():
-    run_env_setup()
-
-    print(
-        f"ETL pipeline run successfully in "
-        f'{os.getenv("ENV", "error")} environment!'
-    )
-
-
-def run_env_setup():
-    print("Setting up environment...")
-    setup_env(sys.argv)
-    print("Environment setup complete.")
-
-
-if __name__ == "__main__":
-    main()
+def extract_and_load_data(filepath):
+    """Extract and Load the data from the ActivitesGarmin CSV Dataset"""
+    return pd.read_csv(filepath)
