@@ -81,4 +81,3 @@ def cleanup_previous_env():
     for key in keys_to_clear:
         if key in os.environ:
             del os.environ[key]
-

@@ -30,7 +30,6 @@ setup(
     python_requires=">=3.6",
 )
 
-
 # Explanation - note that pip install setuptools is required to run this file
 # name: The name of your project.
 # version: The current version of your project.

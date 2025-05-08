@@ -37,7 +37,8 @@ def report_results(py_result, sql_result):
         else:
             print(py_result.stdout)
     else:
-        print(f"Python linting failed with return code: " f"{py_result.returncode}")
+        print(f"""Python linting failed with
+              return code: """ f"{py_result.returncode}")
         print(py_result.stdout)
         print(py_result.stderr)
 
@@ -117,6 +118,8 @@ def main():
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        raise ValueError("Usage: run_tests.py <unit|integration|component|all|lint>")
+        raise ValueError("""
+        Usage: run_tests.py <unit|integration|component|all|lint>
+        """)
     else:
-        main()     
+        main()
