@@ -5,9 +5,13 @@ def clean_and_transform_data(df):
     """Clean the loaded data from the ActivitiesGarmin dataset"""
     df = drop_unnecessary_columns(df)
     df = convert_to_nulls(df)
-    # df = convert_to_na(df)
-    # df = create_booleans(df)
-    # df = clean_numerical_columns(df)
+    df = create_booleans(df)
+    df = convert_elevation(df)
+    df = convert_steps(df)
+    df = convert_ascent_descent(df)
+    df = convert_data_type(df)
+    df = remove_columns_with_tt_below_ten_mins(df)
+    to_csv(df)
     return df
 
 
@@ -26,7 +30,6 @@ def drop_unnecessary_columns(df):
                      "Active Time",
                      "Total Run Distance",
                      "Avg Run Speed",
-                     "Max Speed",
                      "Avg Power",
                      "Max Power",
                      "Aerobic TE",
@@ -51,17 +54,76 @@ def convert_to_nulls(df):
         return value
 
     df["Avg Speed"] = df["Avg Speed"].apply(parse_avg_speed)
-
-    return df["Avg Speed"]
-
-
-# def create_booleans(df):
-#     """Creating new columns to keep track of filled na's"""
-#     df["Avg Speed Inputted"] = df["Avg Speed"].isna()
+    df["Max Speed"] = df["Max Speed"].apply(parse_avg_speed)
+    return df
 
 
-# def clean_numerical_columns(df):
-#     df["Total Ascent"] = df["Total Ascent"].fillna(0)
-#     df["Total Descent"] = df["Total Ascent"].fillna(0)
-#     cardio_mean_speed = df.loc[df["Activity Type"] == 'Cardio', 'Avg Speed'].mean()
-#     df["Avg Speed"] = df["Avg Speed"].fillna(cardio_mean_speed)
+def convert_elevation(df):
+    """Converting null values represented as '--' to 85m as all recorded
+    with out min or max will be at my gym at 85m"""
+    def parse_elevation(value):
+        if isinstance(value, str) and "-" not in value:
+            value = value
+        else:
+            value = "85"
+        return value
+
+    df["Min Elevation"] = df["Min Elevation"].apply(parse_elevation)
+    df["Max Elevation"] = df["Max Elevation"].apply(parse_elevation)
+    return df
+
+
+def convert_steps(df):
+    def parse_steps(value):
+        if isinstance(value, str) and "-" not in value:
+            value = value
+        else:
+            value = "0"
+        return value
+
+    df["Steps"] = df["Steps"].apply(parse_steps)
+    return df
+
+
+def convert_ascent_descent(df):
+    def parse_ascent_descent(value):
+        if isinstance(value, str) and "-" not in value:
+            value = value
+        else:
+            value = "0"
+        return value
+
+    df["Total Ascent"] = df["Total Ascent"].apply(parse_ascent_descent)
+    df["Total Descent"] = df["Total Descent"].apply(parse_ascent_descent)
+
+    return df
+
+
+def create_booleans(df):
+    """Creating new columns to keep track of filled na's"""
+    df["Avg Speed Removed"] = df["Avg Speed"].isna()
+
+    return df
+
+
+def convert_data_type(df):
+    df["Avg Speed"] = pd.to_timedelta(df["Avg Speed"], errors='coerce')
+    df["Date"] = pd.to_datetime(df["Date"], errors='coerce')
+    df["Total Time"] = pd.to_timedelta(df["Total Time"], errors='coerce')
+    df["Best Lap Time"] = pd.to_timedelta(df["Best Lap Time"], errors='coerce')
+    df["Moving Time"] = pd.to_timedelta(df["Moving Time"], errors='coerce')
+
+    return df
+
+
+def remove_columns_with_tt_below_ten_mins(df):
+    """A few recorded activity's are recording errors or
+    accidental and would skew data - removing rows that have a
+    total time of less than 10 minutes"""
+    df = df[df["Total Time"] >= pd.to_timedelta("00:10:00")]
+
+    return df
+
+
+def to_csv(df):
+    df.to_csv('./data/processed/CleanedActivitiesGarmin.csv')
