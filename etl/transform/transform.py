@@ -19,6 +19,7 @@ def drop_unnecessary_columns(df):
     """Drop any unnecessary columns and duplicates"""
     df.drop(columns=["Favorite",
                      "Avg Bike Cadence",
+                     "Max Speed",  # Potentially use this!
                      "Max Bike Cadence",
                      "Total Strokes",
                      "Avg. Swolf",
@@ -45,7 +46,8 @@ def drop_unnecessary_columns(df):
 def convert_to_nulls(df):
     """As some "activities" involve other time formats and are inaccurate due
     to the type of session e.g a lot of "Cardio" sessions are resistance
-    so an Avg speed would not make sense -> these are converted to None values"""
+    so an Avg speed would not make sense -> these are converted to None 
+    values"""
     def parse_avg_speed(value):
         if isinstance(value, str) and ":" in value:
             value = value
@@ -107,11 +109,21 @@ def create_booleans(df):
 
 
 def convert_data_type(df):
+    """Converts to correct and useful datatypes"""
     df["Avg Speed"] = pd.to_timedelta(df["Avg Speed"], errors='coerce')
     df["Date"] = pd.to_datetime(df["Date"], errors='coerce')
     df["Total Time"] = pd.to_timedelta(df["Total Time"], errors='coerce')
     df["Best Lap Time"] = pd.to_timedelta(df["Best Lap Time"], errors='coerce')
     df["Moving Time"] = pd.to_timedelta(df["Moving Time"], errors='coerce')
+    df["Calories"] = pd.to_numeric(df["Calories"], errors='coerce')
+    df["Avg HR"] = pd.to_numeric(df["Avg HR"], errors='coerce')
+    df["Max HR"] = pd.to_numeric(df["Max HR"], errors='coerce')
+    df["Total Ascent"] = pd.to_numeric(df["Total Ascent"], errors='coerce')
+    df["Total Descent"] = pd.to_numeric(df["Total Decent"], errors='coerce')
+    df["Steps"] = pd.to_numeric(df["Steps"], errors='coerce')
+    df["Elapsed Time"] = pd.to_timedelta(df["Elapsed Time"], errors='coerce')
+    df["Min Elevation"] = pd.to_numeric(df["Min Elevation"], errors='coerce')
+    df["Max Elevation"] = pd.to_numeric(df["Max Elevation"], errors='coerce')
 
     return df
 
@@ -127,3 +139,5 @@ def remove_columns_with_tt_below_ten_mins(df):
 
 def to_csv(df):
     df.to_csv('./data/processed/CleanedActivitiesGarmin.csv')
+
+    print(df.dtypes)

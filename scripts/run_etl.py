@@ -3,6 +3,7 @@ import sys
 from config.env_config import setup_env
 from etl.extract.extract import extract_and_load_data
 from etl.transform.transform import clean_and_transform_data
+from app.streamlit_main import streamlit_main
 
 
 def main():
