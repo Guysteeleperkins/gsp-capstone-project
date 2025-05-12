@@ -56,7 +56,7 @@ def convert_to_nulls(df):
         return value
 
     df["Avg Speed"] = df["Avg Speed"].apply(parse_avg_speed)
-    df["Max Speed"] = df["Max Speed"].apply(parse_avg_speed)
+    # df["Max Speed"] = df["Max Speed"].apply(parse_avg_speed)
     return df
 
 
@@ -119,11 +119,12 @@ def convert_data_type(df):
     df["Avg HR"] = pd.to_numeric(df["Avg HR"], errors='coerce')
     df["Max HR"] = pd.to_numeric(df["Max HR"], errors='coerce')
     df["Total Ascent"] = pd.to_numeric(df["Total Ascent"], errors='coerce')
-    df["Total Descent"] = pd.to_numeric(df["Total Decent"], errors='coerce')
+    df["Total Descent"] = pd.to_numeric(df["Total Descent"], errors='coerce')
     df["Steps"] = pd.to_numeric(df["Steps"], errors='coerce')
     df["Elapsed Time"] = pd.to_timedelta(df["Elapsed Time"], errors='coerce')
     df["Min Elevation"] = pd.to_numeric(df["Min Elevation"], errors='coerce')
     df["Max Elevation"] = pd.to_numeric(df["Max Elevation"], errors='coerce')
+    df["Distance"] = pd.to_numeric(df["Distance"], errors='coerce')
 
     return df
 
@@ -139,5 +140,3 @@ def remove_columns_with_tt_below_ten_mins(df):
 
 def to_csv(df):
     df.to_csv('./data/processed/CleanedActivitiesGarmin.csv')
-
-    print(df.dtypes)

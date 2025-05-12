@@ -1,9 +1,9 @@
 import streamlit as st
-from app.metrics_visuals import display_metrics
+from app.metrics_visuals import display_metrics, display_visualizations
 from app.read_csv import read_cleaned_csv
 
 
-def streamlit_main():
+def main():
     """Main function to run the Streamlit App"""
     st.set_page_config(
         page_title="GSP Garmin Data",
@@ -16,7 +16,13 @@ def streamlit_main():
     st.title("GSP Garmin Dataset Explorer")
 
     # Set dataframe
-    df = read_cleaned_csv("/data/processed/CleanedActivitiesGarmin.csv")
+    df = read_cleaned_csv("./data/processed/CleanedActivitiesGarmin.csv")
 
     # Display Metrics
     display_metrics(df)
+
+    display_visualizations(df)
+
+
+if __name__ == "__main__":
+    main()
