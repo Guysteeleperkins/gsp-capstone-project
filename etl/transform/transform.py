@@ -9,11 +9,11 @@ def clean_and_transform_data(df):
     df = create_booleans(df)
     df = convert_elevation(df)
     df = convert_steps(df)
+    df = clean_large_nums(df)
     df = convert_ascent_descent(df)
     df = convert_data_type(df)
     df = fill_step_nones(df)
     df = remove_columns_with_tt_below_ten_mins(df)
-    to_csv(df)
     return df
 
 
@@ -111,6 +111,21 @@ def convert_steps(df):
     return df
 
 
+def clean_large_nums(df):
+    def parse_large_nums(value):
+        if isinstance(value, str) and "," not in value:
+            return value
+        else:
+            values = value.split(',')
+            value = values[0] + values[1]
+            return value
+
+    df["Calories"] = df["Calories"].apply(parse_large_nums)
+    df["Max Elevation"] = df["Max Elevation"].apply(parse_large_nums)
+    df["Min Elevation"] = df["Min Elevation"].apply(parse_large_nums)
+    return df
+
+
 def fill_step_nones(df):
     """Calculate average steps and fill none values
     with this average"""
@@ -149,6 +164,8 @@ def convert_data_type(df):
     """Converts to correct and useful datatypes"""
     df["Avg Speed"] = pd.to_timedelta(df["Avg Speed"], errors='coerce')
     df["Date"] = pd.to_datetime(df["Date"], errors='coerce')
+    df["Date"] = df["Date"].dt.date
+    df["Date"] = pd.to_datetime(df["Date"], errors='coerce')
     df["Total Time"] = pd.to_timedelta(df["Total Time"], errors='coerce')
     df["Best Lap Time"] = pd.to_timedelta(df["Best Lap Time"], errors='coerce')
     df["Moving Time"] = pd.to_timedelta(df["Moving Time"], errors='coerce')
@@ -173,7 +190,3 @@ def remove_columns_with_tt_below_ten_mins(df):
     df = df[df["Total Time"] >= pd.to_timedelta("00:10:00")]
 
     return df
-
-
-def to_csv(df):
-    df.to_csv('./data/processed/CleanedActivitiesGarmin.csv')
