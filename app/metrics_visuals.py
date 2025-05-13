@@ -21,6 +21,9 @@ def display_metrics(df):
     with col4:
         st.metric(label="Steps Taken", value=total_steps)
 
+    # Display Dataframe
+    st.dataframe(df)
+
 
 def calculate_total_distance(df):
     """Calculate total distance run within time frame
@@ -54,8 +57,8 @@ def create_weekly_activities_chart(df):
     fig = px.bar(
         weekly_df,
         x="Week",
-        y="Number of Activities",
-        title="Number of Activities per Week"
+        y="Activity Count",
+        title="Weekly Activity Count"
     )
 
     return fig

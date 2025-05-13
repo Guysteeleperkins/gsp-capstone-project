@@ -4,12 +4,14 @@ import pandas as pd
 def clean_and_transform_data(df):
     """Clean the loaded data from the ActivitiesGarmin dataset"""
     df = drop_unnecessary_columns(df)
+    df = preprocess_avg_speed_column(df)
     df = convert_to_nulls(df)
     df = create_booleans(df)
     df = convert_elevation(df)
     df = convert_steps(df)
     df = convert_ascent_descent(df)
     df = convert_data_type(df)
+    df = fill_step_nones(df)
     df = remove_columns_with_tt_below_ten_mins(df)
     to_csv(df)
     return df
@@ -43,17 +45,39 @@ def drop_unnecessary_columns(df):
     return df
 
 
+def preprocess_avg_speed_column(df):
+    """Preprocess the Avg Speed column to make it compatible
+    with pd.to_timedelta."""
+    def format_time(value):
+        if isinstance(value, str) and ":" in value:
+            # Add "00:" if the value is in "MM:SS" format
+            parts = value.split(":")
+            if len(parts) == 2:  # MM:SS
+                minutes = parts[0].zfill(2)  # Ensure minutes are 2 digits
+                seconds = parts[1].zfill(2)  # Ensure seconds are 2 digits
+                return f"00:{minutes}:{seconds}"
+            elif len(parts) == 3:  # HH:MM:SS
+                hours = parts[0].zfill(2)    # Ensure hours are 2 digits
+                minutes = parts[1].zfill(2)  # Ensure minutes are 2 digits
+                seconds = parts[2].zfill(2)  # Ensure seconds are 2 digits
+                return f"{hours}:{minutes}:{seconds}"
+        return None  # For invalid or missing values
+
+    df["Avg Speed"] = df["Avg Speed"].apply(format_time)
+
+    return df
+
+
 def convert_to_nulls(df):
     """As some "activities" involve other time formats and are inaccurate due
     to the type of session e.g a lot of "Cardio" sessions are resistance
-    so an Avg speed would not make sense -> these are converted to None 
+    so an Avg speed would not make sense -> these are converted to None
     values"""
     def parse_avg_speed(value):
         if isinstance(value, str) and ":" in value:
-            value = value
+            return value
         else:
-            value = None
-        return value
+            return None
 
     df["Avg Speed"] = df["Avg Speed"].apply(parse_avg_speed)
     # df["Max Speed"] = df["Max Speed"].apply(parse_avg_speed)
@@ -84,6 +108,19 @@ def convert_steps(df):
         return value
 
     df["Steps"] = df["Steps"].apply(parse_steps)
+    return df
+
+
+def fill_step_nones(df):
+    """Calculate average steps and fill none values
+    with this average"""
+
+    if "Steps" in df.columns:
+        # Calculate average steps
+        average_steps = df["Steps"].mean().round(0)
+        # Fill None values with average steps
+        df["Steps"] = df["Steps"].fillna(average_steps)
+
     return df
 
 
