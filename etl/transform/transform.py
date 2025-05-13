@@ -12,6 +12,7 @@ def clean_and_transform_data(df):
     df = clean_large_nums(df)
     df = convert_ascent_descent(df)
     df = convert_data_type(df)
+    df = clean_total_asc_des(df)
     df = fill_step_nones(df)
     df = remove_columns_with_tt_below_ten_mins(df)
     return df
@@ -96,6 +97,30 @@ def convert_elevation(df):
 
     df["Min Elevation"] = df["Min Elevation"].apply(parse_elevation)
     df["Max Elevation"] = df["Max Elevation"].apply(parse_elevation)
+    return df
+
+
+def clean_total_asc_des(df):
+    """Calculating total ascent and descent using elevation"""
+    def parse_acs_des(value, max_elevation, min_elevation):
+        if value is None or pd.isna(value):
+            return abs(max_elevation - min_elevation)
+        return value
+
+    df["Total Ascent"] = df.apply(
+        lambda row: parse_acs_des(row["Total Ascent"],
+                                  row["Max Elevation"],
+                                  row["Min Elevation"]),
+        axis=1
+        )
+
+    df["Total Descent"] = df.apply(
+        lambda row: parse_acs_des(row["Total Ascent"],
+                                  row["Max Elevation"],
+                                  row["Min Elevation"]),
+        axis=1
+        )
+
     return df
 
 

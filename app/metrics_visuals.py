@@ -1,6 +1,8 @@
 import streamlit as st
+import pandas as pd
 import plotly.express as px
-from app.data_processing import weekly_activities
+import plotly.graph_objects as go
+from app.data_processing import weekly_activities, weekly_avg_rhr
 
 
 def display_metrics(df):
@@ -64,7 +66,104 @@ def create_weekly_activities_chart(df):
     return fig
 
 
+def create_rhr_vs_weekly_activities(df):
+    """Create a chart to show RHR against number of activities.
+    I found this online, it is not my own code"""
+
+    # Get weekly Activity count
+    weekly_df = weekly_activities(df)
+
+    # Get Average RHR per week
+    weekly_rhr_df = weekly_avg_rhr(df)
+
+    # Merge Dataframes
+    combined_df = pd.merge(weekly_df, weekly_rhr_df, on='Week', how='inner')
+
+    # Create a bar chart for Activity count
+    fig = go.Figure()
+
+    fig.add_trace(
+        go.Bar(
+            x=combined_df['Week'],
+            y=combined_df['Activity Count'],
+            name="Activity Count",
+            marker_color='blue',
+            yaxis='y1'  # link to primary y-axis
+        )
+    )
+
+    # Add a line chart for average RHR
+    fig.add_trace(
+        go.Scatter(
+            x=combined_df['Week'],
+            y=combined_df['Resting Heart Rate'],
+            name='Average Resting Heart Rate',
+            mode='lines+markers',
+            line=dict(color='red'),
+            yaxis='y2'  # link to Secondary y-axis
+        )
+    )
+
+    # Update Layout
+    fig.update_layout(
+        title="How Weekly Activity Count Affects Resting Heart Rate",
+        xaxis=dict(title="Week"),
+        yaxis=dict(
+            title=dict(
+                text="Activity Count",
+                font=dict(color="blue")  # Set font color for the title
+            ),
+            tickfont=dict(color="blue")  # Set font color for the ticks
+        ),
+        yaxis2=dict(
+            title=dict(
+                text="Resting Heart Rate",
+                font=dict(color="red")  # Set font color for the title
+            ),
+            tickfont=dict(color="red"),  # Set font color for the ticks
+            overlaying="y",  # Overlay on the same x-axis
+            side="right"  # Place on the right-hand side
+        ),
+        legend=dict(title="Metrics"),
+        barmode='group'
+    )
+    return fig
+
+
+def create_stress_over_time_chart(df):
+    """Create a chart for stress over time"""
+    fig = px.line(
+        df,
+        x='Date',
+        y='stress',
+        title="Stress Over Time"
+    )
+
+    return fig
+
+
+def create_rhr_over_time_chart(df):
+    """Create a chart for stress over time"""
+    fig = px.line(
+        df,
+        y='Resting Heart Rate',
+        x='Date',
+        title="RHR Over Time"
+    )
+
+    return fig
+
+
 def display_visualizations(df):
     """Display visualizations in Streamlit."""
     fig1 = create_weekly_activities_chart(df)
     st.plotly_chart(fig1)
+
+    fig2 = create_stress_over_time_chart(df)
+    st.plotly_chart(fig2)
+
+    fig3 = create_rhr_over_time_chart(df)
+    st.plotly_chart(fig3)
+
+    fig4 = create_rhr_vs_weekly_activities(df)
+    st.plotly_chart(fig4)

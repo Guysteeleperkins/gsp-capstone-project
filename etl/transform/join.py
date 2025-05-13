@@ -22,5 +22,4 @@ def join_dataframes(df1, df2, df3):
 
     df_combined.set_index('Date', inplace=True)
 
-    print(df_combined)
     return df_combined
