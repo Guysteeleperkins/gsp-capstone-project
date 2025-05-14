@@ -17,17 +17,20 @@ def main():
         f"ETL pipeline run successfully in "
         f'{os.getenv("ENV", "error")} environment!'
     )
-
+    #  Run tests
     run_tests()
-
+    #  Assign CSVs
     data = run_extraction()
-
+    #  Transform CSVs
     df = run_transform(data)
 
     print("Converting DataFrame to cleaned CSV...")
+    #  Convert DataFrame to cleaned CSV
     df.to_csv("./data/processed/CleanedActivitiesGarmin.csv")
     print("Transformed CSV creation successful.")
-    return df
+
+    #  Run Streamlit App
+    run_streamlit_app()
 
 
 def run_env_setup():
@@ -84,6 +87,39 @@ def run_transform(data):
     print("DataFrames joined.")
 
     return df
+
+
+def run_streamlit_app():
+    """Launch Streamlit app"""
+    """Copilot also helped me with this one too but I thought it was
+    a cool feature"""
+    print("Would you like to launch Streamlit App")
+    choice = input("Enter your choice (y/n): ")
+
+    if choice == "y":
+        print("Launching Streamlit App...")
+        try:
+            # Set the PYTHONPATH environment variable
+            env = os.environ.copy()
+            env["PYTHONPATH"] = "."
+
+            subprocess.run(["streamlit",
+                            "run",
+                            "app/streamlit_main.py"],
+                           check=True,
+                           env=env)
+        except FileNotFoundError:
+            print("""
+                  Error: Streamlit is not installed.
+                  Please install it using 'pip install streamlit'.""")
+            sys.exit(1)
+        except subprocess.CalledProcessError as e:
+            print(f"Error: Failed to launch Streamlit app. {e}")
+            sys.exit(1)
+    elif choice == "n":
+        print("Streamlit launch aborted!")
+    else:
+        print("Invalid choice. Exiting")
 
 
 if __name__ == "__main__":
