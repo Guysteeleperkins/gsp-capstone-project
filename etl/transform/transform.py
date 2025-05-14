@@ -91,6 +91,8 @@ def convert_elevation(df):
     def parse_elevation(value):
         if isinstance(value, str) and "-" not in value:
             value = value
+        elif isinstance(value, int):
+            return value
         else:
             value = "85"
         return value
@@ -128,6 +130,8 @@ def convert_steps(df):
     def parse_steps(value):
         if isinstance(value, str) and "-" not in value:
             value = value
+        elif isinstance(value, int):
+            return value
         else:
             value = "0"
         return value
@@ -167,9 +171,12 @@ def fill_step_nones(df):
 
 
 def convert_ascent_descent(df):
+    """Converts null values represented as '--' to '0' """
     def parse_ascent_descent(value):
         if isinstance(value, str) and "-" not in value:
             value = value
+        elif isinstance(value, int):
+            return value
         else:
             value = "0"
         return value
@@ -214,6 +221,9 @@ def remove_columns_with_tt_below_ten_mins(df):
     """A few recorded activity's are recording errors or
     accidental and would skew data - removing rows that have a
     total time of less than 10 minutes"""
-    df = df[df["Total Time"] >= pd.to_timedelta("00:10:00")]
-
+    if "Total Time" in df.columns:
+        # Convert Total Time to Timedelta
+        df["Total Time"] = pd.to_timedelta(df["Total Time"], errors="coerce")
+        # Filter rows where Total Time is >= 10 minutes
+        df = df[df["Total Time"] >= pd.to_timedelta("00:10:00")]
     return df

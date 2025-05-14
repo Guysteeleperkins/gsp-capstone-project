@@ -1,10 +1,5 @@
 import sys
 import os
-
-# Add the project root directory to the Python path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(
-    os.path.abspath(__file__)))))
-
 import unittest
 import pandas as pd
 from etl.transform.transform import (
@@ -12,6 +7,10 @@ from etl.transform.transform import (
     preprocess_avg_speed_column,
     convert_elevation,
     clean_large_nums)
+
+# Add the project root directory to the Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__)))))
 
 
 class TestTransformFunctions(unittest.TestCase):
