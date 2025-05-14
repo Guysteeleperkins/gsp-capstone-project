@@ -140,6 +140,8 @@ def clean_large_nums(df):
     def parse_large_nums(value):
         if isinstance(value, str) and "," not in value:
             return value
+        elif isinstance(value, int):
+            return value
         else:
             values = value.split(',')
             value = values[0] + values[1]
