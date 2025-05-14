@@ -32,8 +32,12 @@ def main():
 
 def run_env_setup():
     print("Setting up environment...")
-    setup_env(sys.argv)
-    print("Environment setup complete.")
+    try:
+        setup_env(sys.argv)
+        print("Environment setup complete.")
+    except Exception as e:
+        print(f"Error during environment setup: {e}")
+        sys.exit(1)
 
 
 def run_tests():

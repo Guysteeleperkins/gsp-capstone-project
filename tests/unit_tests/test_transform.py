@@ -67,24 +67,24 @@ class TestTransformFunctionsA(unittest.TestCase):
     def test_drop_unnecessary_columns(self):
         # Expected output after dropping
         expected_df = pd.DataFrame({
-                "Activity Type": ["Running", "Cardio"],
-                "Date": ["2025-05-01 16:10:50", "2025-05-02 10:00:00"],
-                "Title": ["Test Run 1", "Test Cardio 1"],
-                "Distance": [5.0, 2.5],
-                "Calories": ["3,000", 150],
-                "Total Time": ["00:30:00", "00:15:00"],
-                "Avg HR": [120, 110],
-                "Max HR": [150, 140],
-                "Avg Speed": ["5:20", "--"],
-                "Total Ascent": [50, 30],
-                "Total Descent": [50, 30],
-                "Steps": [5000, 3000],
-                "Best Lap Time": ["00:01:00", "00:00:50"],
-                "Number of Laps": [4, 3],
-                "Moving Time": ["00:29:00", "00:14:00"],
-                "Elapsed Time": ["00:30:00", "00:15:00"],
-                "Min Elevation": ["2,500", "--"],
-                "Max Elevation": ["1,200", "--"]
+            "Activity Type": ["Running", "Cardio"],
+            "Date": ["2025-05-01 16:10:50", "2025-05-02 10:00:00"],
+            "Title": ["Test Run 1", "Test Cardio 1"],
+            "Distance": [5.0, 2.5],
+            "Calories": ["3,000", 150],
+            "Total Time": ["00:30:00", "00:15:00"],
+            "Avg HR": [120, 110],
+            "Max HR": [150, 140],
+            "Avg Speed": ["5:20", "--"],
+            "Total Ascent": [50, 30],
+            "Total Descent": [50, 30],
+            "Steps": [5000, 3000],
+            "Best Lap Time": ["00:01:00", "00:00:50"],
+            "Number of Laps": [4, 3],
+            "Moving Time": ["00:29:00", "00:14:00"],
+            "Elapsed Time": ["00:30:00", "00:15:00"],
+            "Min Elevation": ["2,500", "--"],
+            "Max Elevation": ["1,200", "--"]
         })
 
         result_df = drop_unnecessary_columns(self.sample_df)
