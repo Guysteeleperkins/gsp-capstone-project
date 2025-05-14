@@ -8,7 +8,6 @@ from etl.transform.transform import (
     convert_elevation,
     clean_large_nums,
     create_booleans,
-    convert_elevation,
     convert_steps,
     convert_ascent_descent,
     clean_total_asc_des,
@@ -187,7 +186,7 @@ class TestTransformFunctionsA(unittest.TestCase):
 
         result_df = convert_elevation(self.sample_df)
 
-        pd.testing.assert_frame_equal(result_df, expected_df)  
+        pd.testing.assert_frame_equal(result_df, expected_df)
 
     def test_clean_large_numbers(self):
 
