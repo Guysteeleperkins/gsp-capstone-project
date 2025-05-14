@@ -12,6 +12,8 @@ def display_metrics(df):
     total_elevation = calculate_total_elevation(df)
     total_steps = calculate_total_steps(df)
 
+    st.markdown('<hr style="border:3px solid gray">', unsafe_allow_html=True)
+
     # Display Metics in Columns
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -22,9 +24,8 @@ def display_metrics(df):
         st.metric(label="Elevation (M)", value=total_elevation)
     with col4:
         st.metric(label="Steps Taken", value=total_steps)
-
-    # Display Dataframe
-    st.dataframe(df)
+   
+    st.markdown('<hr style="border:3px solid gray">', unsafe_allow_html=True)
 
 
 def calculate_total_distance(df):
@@ -159,11 +160,25 @@ def display_visualizations(df):
     fig1 = create_weekly_activities_chart(df)
     st.plotly_chart(fig1)
 
+    st.markdown('<hr style="border:3px solid gray">', unsafe_allow_html=True)
+
     fig2 = create_stress_over_time_chart(df)
     st.plotly_chart(fig2)
+
+    st.markdown('<hr style="border:3px solid gray">', unsafe_allow_html=True)
 
     fig3 = create_rhr_over_time_chart(df)
     st.plotly_chart(fig3)
 
+    st.markdown('<hr style="border:3px solid gray">', unsafe_allow_html=True)
+
     fig4 = create_rhr_vs_weekly_activities(df)
     st.plotly_chart(fig4)
+
+    st.markdown('<hr style="border:3px solid gray">', unsafe_allow_html=True)
+
+
+def display_dataframe(df):
+    # Display Dataframe
+    st.write("Cleaned DataFrame")
+    st.dataframe(df)
