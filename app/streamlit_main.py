@@ -1,6 +1,10 @@
+import sys
+import os
 import streamlit as st
 from app.metrics_visuals import display_metrics, display_visualizations
 from app.read_csv import read_cleaned_csv
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 def main():

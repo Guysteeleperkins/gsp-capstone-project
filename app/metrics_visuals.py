@@ -1,8 +1,13 @@
+import sys
+import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from app.data_processing import weekly_activities, weekly_avg_rhr
+
+# Add the project root directory to the Python module search path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 def display_metrics(df):
