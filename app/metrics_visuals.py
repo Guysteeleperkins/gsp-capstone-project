@@ -105,7 +105,7 @@ def create_rhr_vs_weekly_activities(df):
             y=combined_df['Resting Heart Rate'],
             name='Average Resting Heart Rate',
             mode='lines+markers',
-            line=dict(color='red'),
+            line=dict(color='grey'),
             yaxis='y2'  # link to Secondary y-axis
         )
     )
