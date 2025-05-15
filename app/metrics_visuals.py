@@ -105,7 +105,7 @@ def create_rhr_vs_weekly_activities(df):
             y=combined_df['Resting Heart Rate'],
             name='Average Resting Heart Rate',
             mode='lines+markers',
-            line=dict(color='grey'),
+            line=dict(color='black'),
             yaxis='y2'  # link to Secondary y-axis
         )
     )
@@ -124,9 +124,9 @@ def create_rhr_vs_weekly_activities(df):
         yaxis2=dict(
             title=dict(
                 text="Resting Heart Rate",
-                font=dict(color="grey")  # Set font color for the title
+                font=dict(color="black")  # Set font color for the title
             ),
-            tickfont=dict(color="grey"),  # Set font color for the ticks
+            tickfont=dict(color="black"),  # Set font color for the ticks
             overlaying="y",  # Overlay on the same x-axis
             side="right"  # Place on the right-hand side
         ),
