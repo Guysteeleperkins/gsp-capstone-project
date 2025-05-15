@@ -29,7 +29,7 @@ def main():
 
     display_visualizations(df)
 
-    display_dataframe()
+    display_dataframe(df)
 
 
 if __name__ == "__main__":
