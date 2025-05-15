@@ -4,7 +4,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from app.data_processing import weekly_activities, weekly_avg_rhr
+from data_processing import weekly_activities, weekly_avg_rhr
 
 # Add the project root directory to the Python module search path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -29,7 +29,7 @@ def display_metrics(df):
         st.metric(label="Elevation (M)", value=total_elevation)
     with col4:
         st.metric(label="Steps Taken", value=total_steps)
-   
+
     st.markdown('<hr style="border:3px solid gray">', unsafe_allow_html=True)
 
 
