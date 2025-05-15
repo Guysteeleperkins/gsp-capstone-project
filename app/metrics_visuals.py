@@ -182,6 +182,8 @@ def display_visualizations(df):
 
     st.markdown('<hr style="border:3px solid gray">', unsafe_allow_html=True)
 
+    display_dataframe()
+
 
 def display_dataframe(df):
     # Display Dataframe
