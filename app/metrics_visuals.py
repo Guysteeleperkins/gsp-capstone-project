@@ -124,9 +124,9 @@ def create_rhr_vs_weekly_activities(df):
         yaxis2=dict(
             title=dict(
                 text="Resting Heart Rate",
-                font=dict(color="red")  # Set font color for the title
+                font=dict(color="grey")  # Set font color for the title
             ),
-            tickfont=dict(color="red"),  # Set font color for the ticks
+            tickfont=dict(color="grey"),  # Set font color for the ticks
             overlaying="y",  # Overlay on the same x-axis
             side="right"  # Place on the right-hand side
         ),
