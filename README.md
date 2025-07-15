@@ -1,5 +1,7 @@
 # GSP Capstone Project
 
+## Documentation to be completed!!
+
 ![Streamlit App responsive screenshot](./documentation/images/MojoYogaRepsonsive.png)
 
 ## Introduction 
@@ -13,6 +15,7 @@ Live site:
 ## Table of Contents
 
 - [GSP Capstone Project](#gsp-capstone-project)
+  - [Documentation to be completed!!](#documentation-to-be-completed)
   - [Introduction](#introduction)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
@@ -73,7 +76,7 @@ Live site:
 
 ## Agile Methodologies - Project Management
 
-MojoYoga was my second project to implement Agile. With some experience in using Agile in a group hackathon a few weeks before beginning this project I knew it would be useful to keep on track and progress. I used [Github Projects Board](enter url here) to plan and complete user stories. This helped keep motivation up as I could "See" the progress being made as I moved items from "To Do" to "In Progress" to "Complete".
+Garmin Explorer was my third project to implement Agile. With some experience in using Agile in a group hackathon during my time at codeinstitute along with MojoYoga my capstone project for the same bootcamp I knew it would be useful to keep on track and progress. I used pen and paper for user stories and this helped keep motivation up as I could "See" the progress being made as I moved items from "To Do" to "In Progress" to "Complete". I also underwent sprints to finish certain parts of my project - which was fantastic for time management.
 
 ### MoSCoW Prioritization 
 
@@ -89,7 +92,7 @@ I used the MoSCoW Prioritization method for MojoYoga:
 
 ## Sprints
 EDIT THIS EVENTUALLY
-I had 14 working days to complete this project and had learned from previous projects that sprints worked effectively, using my GitHub project board filled with user stories I had created I would do very small sprints to complete the user story. If I felt this had been done quickly and I didn't need a break I would add another and keep going. Depending on the day and energy levels I would split larger tasks with things like testing and styling as I went to mix up my work to keep motivation high. I found that after the first 3 days I had comnpleted CRUD functionality and changed my spints to regular work periods with a conistent 5-10 minute break every 1-2 hours. This kept me working effeciently and productively.
+I had 9 working days to complete this project and had learned from previous projects that sprints worked effectively. Depending on the day and energy levels I would split larger tasks with things like testing and styling as I went to mix up my work to keep motivation high. I found that after the first 3 days I had comnpleted CRUD functionality and changed my spints to regular work periods with a conistent 5-10 minute break every 1-2 hours. This kept me working effeciently and productively.
 
 ### User Stories
 

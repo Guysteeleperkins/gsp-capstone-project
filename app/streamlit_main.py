@@ -1,9 +1,9 @@
 import sys
 import os
 import streamlit as st
-from metrics_visuals import (display_metrics,
-                             display_visualizations,
-                             display_dataframe)
+from app.metrics_visuals import (display_metrics,
+                                 display_visualizations,
+                                 display_dataframe)
 from read_csv import read_cleaned_csv
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
