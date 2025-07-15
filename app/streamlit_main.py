@@ -1,7 +1,7 @@
 import sys
 import os
 import streamlit as st
-from app.metrics_visuals import (display_metrics,
+from metrics_visuals import (display_metrics,
                                  display_visualizations,
                                  display_dataframe)
 from read_csv import read_cleaned_csv

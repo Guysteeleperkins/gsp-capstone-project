@@ -2,7 +2,7 @@
 
 ## Documentation to be completed!!
 
-![Streamlit App responsive screenshot](./documentation/images/MojoYogaRepsonsive.png)
+[Streamlit App](https://gspgarmindatasetexplorer.streamlit.app/)
 
 ## Introduction 
 
